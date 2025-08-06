@@ -17,10 +17,10 @@ export default function ListProducts({ token }: { token: string }) {
 
     const fetchProducts = async () => {
         try {
-            let url = api.baseUrl + '/products/v1/Read/' + page;
+            let url = api.baseUrl + '/products/v1/Read/?page=' + page;
 
             if (search && search.length !== 0) {
-                url += '?search=' + search;
+                url += '&search=' + search;
             }
 
             const response = await fetch(url, {
@@ -105,9 +105,11 @@ export default function ListProducts({ token }: { token: string }) {
                 {products.map((product) => (
                     <li key={product.sku}>
                         <Link href={`/product/${product.sku}`}>
-                            <p>
+                            <p className="list-products__name">
                                 <strong>{product.name}</strong>
                             </p>
+                            <p className="list-products__sku">{product.sku}</p>
+                            <p className="list-products__stock">Lagersaldo: {product.stock}</p>
                         </Link>
                     </li>
                 ))}
