@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { getSession } from '../_lib/auth';
 import ListProducts from '../_components/ListProducts';
 
@@ -10,7 +9,7 @@ export default async function Product() {
         console.error('Invalid session or missing token.');
         return (
             <section>
-                <h1>Products</h1>
+                <h1>Produkter</h1>
                 <p>Authentication failed. Please log in again.</p>
             </section>
         );
