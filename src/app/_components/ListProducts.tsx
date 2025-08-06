@@ -3,20 +3,27 @@ import { useState, useEffect } from 'react';
 import { api } from '../_lib/definitions';
 import Link from 'next/link';
 import CustomPagination from '../_components/CustomPagination';
-import { useSearchParams } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 
 export default function ListProducts({ token }: { token: string }) {
     const [products, setProducts] = useState<any[]>([]);
     const [apiData, setApiData] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [search, setSearch] = useState('');
     let page = 1;
     const searchParams = useSearchParams();
     const urlPage = searchParams.get('page');
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch(api.baseUrl + '/products/v1/Read/' + page, {
+            let url = api.baseUrl + '/products/v1/Read/' + page;
+
+            if (search && search.length !== 0) {
+                url += '?search=' + search;
+            }
+
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,12 +53,20 @@ export default function ListProducts({ token }: { token: string }) {
     useEffect(() => {
         if (urlPage) {
             page = parseInt(urlPage, 10);
-            
+
             setProducts([]);
         }
 
         fetchProducts();
-    }, [token, page, urlPage]);
+    }, [token, page, urlPage, search]);
+
+    const handleSearch = (e: any) => {
+        setSearch(e.target.value);
+
+        if (e.target.value.length) {
+            redirect('/product');
+        }
+    };
 
     if (loading) {
         return <p>Laddar produkter...</p>;
@@ -71,6 +86,19 @@ export default function ListProducts({ token }: { token: string }) {
             <h1>Produkter</h1>
             <div>
                 <Link href="/product/create">Skapa ny produkt</Link>
+            </div>
+
+            <div>
+                <label htmlFor="product_search">
+                    Sök produkt
+                    <input
+                        type="text"
+                        name="product_search"
+                        id="product_search"
+                        value={search}
+                        onChange={handleSearch}
+                    />
+                </label>
             </div>
 
             <ul>
