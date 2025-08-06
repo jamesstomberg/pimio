@@ -11,6 +11,9 @@ export default async function Dashboard() {
                 <li>
                     <Link href="/product">Produkter</Link>
                 </li>
+                <li>
+                    <Link href="/user">Användare</Link>
+                </li>
             </ul>
         </section>
     );
