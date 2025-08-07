@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Define an array of PROTECTED routes.
-const protectedRoutes = ['/dashboard', '/product'];
+const protectedRoutes = ['/dashboard', '/product', '/user'];
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
     const sessionCookie = request.cookies.get('session')?.value;
 
     if (!sessionCookie || isSessionInvalid(sessionCookie)) {
-        const loginUrl = new URL('/login', request.url);
+        const loginUrl = new URL('/', request.url);
 
         return NextResponse.redirect(loginUrl);
     }

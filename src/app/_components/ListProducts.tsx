@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import { api } from '../_lib/definitions';
 import Link from 'next/link';
@@ -20,7 +21,7 @@ export default function ListProducts({ token }: { token: string }) {
             let url = api.baseUrl + '/products/v1/Read/?page=' + page;
 
             if (search && search.length !== 0) {
-                url += '&search=' + search;
+                url += `&search=${search}`;
             }
 
             const response = await fetch(url, {
@@ -53,7 +54,6 @@ export default function ListProducts({ token }: { token: string }) {
     useEffect(() => {
         if (urlPage) {
             page = parseInt(urlPage, 10);
-
             setProducts([]);
         }
 
@@ -68,54 +68,84 @@ export default function ListProducts({ token }: { token: string }) {
         }
     };
 
+    const gridMinHeight = () => {
+        if (typeof window !== 'undefined') {
+            const screenHeight = window.innerHeight;
+            return screenHeight * 0.5;
+        }
+        return 400;
+    };
+
     if (loading) {
-        return <p>Laddar produkter...</p>;
+        return (
+            <section className="container mx-auto py-20 text-center">
+                <p className="text-lg text-gray-600">Laddar produkter...</p>
+            </section>
+        );
     }
 
     if (error) {
         return (
-            <section>
-                <h1>Products</h1>
-                <p>{error}</p>
+            <section className="container mx-auto py-20">
+                <h1 className="text-3xl font-bold text-red-600 mb-6">Produkter</h1>
+                <p className="text-lg text-gray-800">{error}</p>
             </section>
         );
     }
 
     return (
-        <section>
-            <h1>Produkter</h1>
-            <div>
-                <Link href="/product/create">Skapa ny produkt</Link>
+        <section className="container mx-auto py-10 px-4">
+            <div className="flex flex-wrap justify-between items-center mb-6">
+                <h1 className="text-3xl font-bold text-blue-600">Produkter</h1>
+                <Link
+                    href="/product/create"
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition no-underline mt-5"
+                >
+                    Skapa ny produkt
+                </Link>
             </div>
 
-            <div>
-                <label htmlFor="product_search">
+            <div className="relative mb-8">
+                <label htmlFor="product_search" className="sr-only">
                     Sök produkt
-                    <input
-                        type="text"
-                        name="product_search"
-                        id="product_search"
-                        value={search}
-                        onChange={handleSearch}
-                    />
                 </label>
+                <input
+                    type="text"
+                    name="product_search"
+                    id="product_search"
+                    value={search}
+                    placeholder="Sök efter produkter..."
+                    onChange={handleSearch}
+                    className="w-full max-w-md px-4 py-2 border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
             </div>
 
-            <ul>
+            <ul
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 list-none p-0"
+                style={{ minHeight: gridMinHeight() }}
+            >
                 {products.map((product) => (
-                    <li key={product.sku}>
-                        <Link href={`/product/${product.sku}`}>
-                            <p className="list-products__name">
-                                <strong>{product.name}</strong>
+                    <li
+                        key={product.sku}
+                        className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
+                    >
+                        <Link
+                            href={`/product/${product.sku}`}
+                            className="block h-full p-4 flex flex-col no-underline"
+                        >
+                            <p className="text-lg font-semibold text-blue-600 mb-2">
+                                {product.name}
                             </p>
-                            <p className="list-products__sku">{product.sku}</p>
-                            <p className="list-products__stock">Lagersaldo: {product.stock}</p>
+                            <p className="text-sm text-gray-600">Artikelnummer: {product.sku}</p>
+                            <p className="text-sm text-gray-600">Lagersaldo: {product.stock}</p>
                         </Link>
                     </li>
                 ))}
             </ul>
 
-            <CustomPagination apiData={apiData} />
+            <div className="mt-10">
+                <CustomPagination apiData={apiData} />
+            </div>
         </section>
     );
 }

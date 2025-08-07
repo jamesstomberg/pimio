@@ -31,82 +31,77 @@ export default function CreateUser({ token }: { token: string }) {
 
         if (response.status !== 201) {
             alert(`Användaren kunde inte skapas. Fel: ${response.statusText}`);
+            return;
         }
 
         alert('Användaren skapades!');
-
         redirect('/dashboard');
     };
 
     const handleTextInputChange = (name: string, e: any) => {
         const value = e.target.value;
 
-        if (name === 'username') {
-            setUsername(value);
-        } else if (name === 'email') {
-            setEmail(value);
-        } else if (name === 'password') {
-            setPassword(value);
-        } else if (name === 'passwordConfirm') {
-            setPasswordConfirm(value);
-        }
+        if (name === 'username') setUsername(value);
+        if (name === 'email') setEmail(value);
+        if (name === 'password') setPassword(value);
+        if (name === 'passwordConfirm') setPasswordConfirm(value);
     };
 
     return (
-        <form action="/">
-            <label htmlFor="username">
-                Användarnamn
+        <form
+            onSubmit={handleCreate}
+            className="bg-white rounded-lg shadow-lg p-8 max-w-lg mx-auto mt-10"
+        >
+            <h1 className="text-2xl font-bold text-blue-600 mb-6 text-center">Skapa användare</h1>
+
+            <label htmlFor="username" className="block mb-4">
+                <span className="block text-gray-800 font-medium mb-2">Användarnamn</span>
                 <input
                     type="text"
-                    name="username"
                     id="username"
                     value={username}
-                    onChange={(e) => {
-                        handleTextInputChange('username', e);
-                    }}
+                    onChange={(e) => handleTextInputChange('username', e)}
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
             </label>
 
-            <label htmlFor="email">
-                E-post
+            <label htmlFor="email" className="block mb-4">
+                <span className="block text-gray-800 font-medium mb-2">E-post</span>
                 <input
                     type="email"
-                    name="email"
                     id="email"
                     value={email}
-                    onChange={(e) => {
-                        handleTextInputChange('email', e);
-                    }}
+                    onChange={(e) => handleTextInputChange('email', e)}
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
             </label>
 
-            <label htmlFor="password">
-                Lösenord
+            <label htmlFor="password" className="block mb-4">
+                <span className="block text-gray-800 font-medium mb-2">Lösenord</span>
                 <input
                     type="password"
-                    name="password"
                     id="password"
                     value={password}
-                    onChange={(e) => {
-                        handleTextInputChange('password', e);
-                    }}
+                    onChange={(e) => handleTextInputChange('password', e)}
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
             </label>
 
-            <label htmlFor="password_confirm">
-                Bekräfta lösenord
+            <label htmlFor="password_confirm" className="block mb-6">
+                <span className="block text-gray-800 font-medium mb-2">Bekräfta lösenord</span>
                 <input
                     type="password"
-                    name="password_confirm"
                     id="password_confirm"
                     value={passwordConfirm}
-                    onChange={(e) => {
-                        handleTextInputChange('passwordConfirm', e);
-                    }}
+                    onChange={(e) => handleTextInputChange('passwordConfirm', e)}
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
             </label>
 
-            <button type="submit" onClick={handleCreate}>
+            <button
+                type="submit"
+                className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg shadow-md hover:bg-blue-700 transition-all"
+            >
                 Skapa
             </button>
         </form>

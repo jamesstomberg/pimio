@@ -4,7 +4,6 @@ import { getSession } from '../_lib/auth';
 export default async function User() {
     const session = await getSession();
 
-    // Check for token validity in the session.
     if (!session || !session.user || !session.user.token) {
         console.error('Invalid session or missing token.');
         return (

@@ -25,14 +25,19 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="sv-SE" className="h-full bg-white">
-            <head>
-                <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-            </head>
+        <html lang="sv-SE" className="h-full bg-gray-100">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}>
-                <Header />
-                <main>{children}</main>
-                <Footer />
+                {/* Flexbox for a pancake layout */}
+                <div className="flex flex-col min-h-screen">
+                    {/* Header at the top */}
+                    <Header />
+
+                    {/* Main content grows to fill the viewport */}
+                    <main className="flex-1 container mx-auto py-6 px-4">{children}</main>
+
+                    {/* Footer at the bottom */}
+                    <Footer />
+                </div>
             </body>
         </html>
     );

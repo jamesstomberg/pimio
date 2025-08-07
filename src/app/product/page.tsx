@@ -4,13 +4,12 @@ import ListProducts from '../_components/ListProducts';
 export default async function Product() {
     const session = await getSession();
 
-    // Check for token validity in the session.
     if (!session || !session.user || !session.user.token) {
         console.error('Invalid session or missing token.');
         return (
-            <section>
-                <h1>Produkter</h1>
-                <p>Authentication failed. Please log in again.</p>
+            <section className="container mx-auto py-10 px-4">
+                <h1 className="text-3xl font-bold text-red-600 mb-4">Produkter</h1>
+                <p className="text-lg text-gray-800">Authentication failed. Please log in again.</p>
             </section>
         );
     }
@@ -18,7 +17,7 @@ export default async function Product() {
     const token = session.user.token;
 
     return (
-        <section>
+        <section className="container mx-auto py-10 px-4">
             <ListProducts token={token} />
         </section>
     );

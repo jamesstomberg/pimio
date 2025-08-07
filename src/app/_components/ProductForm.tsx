@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import { createNewProduct, editProductBySku } from '../_lib/functions';
 import { redirect } from 'next/navigation';
@@ -77,63 +78,99 @@ export default function ProductForm({
     };
 
     return (
-        <section>
-            <form>
-                <label htmlFor="product_sku">
+        <form className="space-y-6">
+            <div>
+                <label
+                    htmlFor="product_sku"
+                    className="block mb-2 text-sm font-medium text-gray-700"
+                >
                     Artikelnummer
-                    <input
-                        type="text"
-                        name="product_sku"
-                        id="product_sku"
-                        value={productSku}
-                        onChange={handleSkuChange}
-                    />
                 </label>
-                <label htmlFor="product_name">
-                    Namn
-                    <input
-                        type="text"
-                        name="product_name"
-                        id="product_name"
-                        value={productName}
-                        onChange={handleNameChange}
-                    />
-                </label>
-                <label htmlFor="product_price">
-                    Pris
-                    <input
-                        type="number"
-                        name="product_price"
-                        id="product_price"
-                        value={productPrice}
-                        onChange={handlePriceChange}
-                    />
-                </label>
-                <label htmlFor="product_stock">
-                    Lager
-                    <input
-                        type="number"
-                        name="product_stock"
-                        id="product_stock"
-                        value={productStock}
-                        onChange={handleStockChange}
-                    />
-                </label>
-                <label htmlFor="product_description">
-                    Beskrivning
-                    <textarea
-                        name="product_description"
-                        id="product_description"
-                        rows={10}
-                        value={productDescription}
-                        onChange={handleDescriptionChange}
-                    ></textarea>
-                </label>
+                <input
+                    type="text"
+                    name="product_sku"
+                    id="product_sku"
+                    value={productSku}
+                    onChange={handleSkuChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+            </div>
 
-                <button type="submit" onClick={handleSave}>
-                    Spara
-                </button>
-            </form>
-        </section>
+            <div>
+                <label
+                    htmlFor="product_name"
+                    className="block mb-2 text-sm font-medium text-gray-700"
+                >
+                    Namn
+                </label>
+                <input
+                    type="text"
+                    name="product_name"
+                    id="product_name"
+                    value={productName}
+                    onChange={handleNameChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="product_price"
+                    className="block mb-2 text-sm font-medium text-gray-700"
+                >
+                    Pris
+                </label>
+                <input
+                    type="number"
+                    name="product_price"
+                    id="product_price"
+                    value={productPrice}
+                    onChange={handlePriceChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="product_stock"
+                    className="block mb-2 text-sm font-medium text-gray-700"
+                >
+                    Lager
+                </label>
+                <input
+                    type="number"
+                    name="product_stock"
+                    id="product_stock"
+                    value={productStock}
+                    onChange={handleStockChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="product_description"
+                    className="block mb-2 text-sm font-medium text-gray-700"
+                >
+                    Beskrivning
+                </label>
+                <textarea
+                    name="product_description"
+                    id="product_description"
+                    rows={10}
+                    value={productDescription}
+                    onChange={handleDescriptionChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                ></textarea>
+            </div>
+
+            <button
+                type="submit"
+                onClick={handleSave}
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition cursor-pointer"
+            >
+                Spara
+            </button>
+        </form>
     );
 }
