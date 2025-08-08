@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getSession, login } from '@/app/_lib/auth';
+import Errors from './Errors';
 
 export default async function LoginForm() {
     const session = await getSession();
@@ -25,7 +26,8 @@ export default async function LoginForm() {
                         const errors = await login(formData);
 
                         if (errors) {
-                            redirect('/login?errors=' + JSON.stringify(errors));
+                            const encodedErrors = encodeURIComponent(JSON.stringify(errors));
+                            redirect(`/login?errors=${encodedErrors}`);
                         }
 
                         redirect('/dashboard');
@@ -77,6 +79,8 @@ export default async function LoginForm() {
                     </div>
                 </form>
             </div>
+
+            <Errors />
         </div>
     );
 }

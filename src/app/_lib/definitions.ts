@@ -2,8 +2,8 @@ import { z } from 'zod';
 import { ApiConfig } from '@/app/_interfaces/Interface.ApiConfig';
 
 export const LoginFormSchema = z.object({
-    username: z.string().min(2, { message: 'Name must be at least 2 characters long.' }).trim(),
-    password: z.string().min(4, { message: 'Be at least 4 characters long' }).trim(),
+    username: z.string().min(2, { message: 'Användarnamn måste vara minst 2 tecken långt.' }).trim(),
+    password: z.string().min(4, { message: 'Lösenord måste vara minst 4 tecken långt.' }).trim(),
 });
 
 export const api: ApiConfig = {
