@@ -5,24 +5,33 @@ import { useEffect, useState } from 'react';
 
 export default function Errors() {
     const searchParams = useSearchParams();
-    const errorsString = searchParams.get('errors') ?? '{}';
-    const [isVisible, setIsVisible] = useState(true);
-
-    let errors: Record<string, string> = {};
-
-    try {
-        errors = JSON.parse(errorsString);
-    } catch (e) {
-        console.error('Failed to parse errors:', e);
-    }
+    const errorsString = searchParams.get('errors'); // Will be null if no errors param
+    const [isVisible, setIsVisible] = useState(false);
+    const [errors, setErrors] = useState<Record<string, string>>({}); // Store parsed errors
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsVisible(false);
-        }, 3000);
+        if (errorsString) {
+            try {
+                const parsedErrors = JSON.parse(errorsString); // Attempt parsing
+                setErrors(parsedErrors);
+                setIsVisible(true); // Show the errors flash
+            } catch (e) {
+                console.error('Failed to parse errors:', e);
+            }
 
-        return () => clearTimeout(timer);
-    }, []);
+            // Set timeout to hide the errors after 3 seconds
+            const timer = setTimeout(() => {
+                setIsVisible(false); // Hide errors
+            }, 3000);
+
+            return () => clearTimeout(timer); // Cleanup on component unmount
+        }
+    }, [errorsString]); // Effect runs when `errorsString` changes
+
+    // Nothing renders if no errors are present
+    if (!isVisible) {
+        return null; // Render nothing
+    }
 
     return (
         <div className={`errors ${isVisible ? 'not-hidden' : ''}`}>

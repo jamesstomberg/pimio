@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { createNewProduct, editProductBySku } from '../_lib/functions';
 import { redirect } from 'next/navigation';
+import Errors from './Errors';
 
 export default function ProductForm({
     productData,
@@ -78,99 +79,102 @@ export default function ProductForm({
     };
 
     return (
-        <form className="space-y-6">
-            <div>
-                <label
-                    htmlFor="product_sku"
-                    className="block mb-2 text-sm font-medium text-gray-700"
-                >
-                    Artikelnummer
-                </label>
-                <input
-                    type="text"
-                    name="product_sku"
-                    id="product_sku"
-                    value={productSku}
-                    onChange={handleSkuChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
-            </div>
+        <section>
+            <form className="space-y-6">
+                <div>
+                    <label
+                        htmlFor="product_sku"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                        Artikelnummer
+                    </label>
+                    <input
+                        type="text"
+                        name="product_sku"
+                        id="product_sku"
+                        value={productSku}
+                        onChange={handleSkuChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                </div>
 
-            <div>
-                <label
-                    htmlFor="product_name"
-                    className="block mb-2 text-sm font-medium text-gray-700"
-                >
-                    Namn
-                </label>
-                <input
-                    type="text"
-                    name="product_name"
-                    id="product_name"
-                    value={productName}
-                    onChange={handleNameChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
-            </div>
+                <div>
+                    <label
+                        htmlFor="product_name"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                        Namn
+                    </label>
+                    <input
+                        type="text"
+                        name="product_name"
+                        id="product_name"
+                        value={productName}
+                        onChange={handleNameChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                </div>
 
-            <div>
-                <label
-                    htmlFor="product_price"
-                    className="block mb-2 text-sm font-medium text-gray-700"
-                >
-                    Pris
-                </label>
-                <input
-                    type="number"
-                    name="product_price"
-                    id="product_price"
-                    value={productPrice}
-                    onChange={handlePriceChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
-            </div>
+                <div>
+                    <label
+                        htmlFor="product_price"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                        Pris
+                    </label>
+                    <input
+                        type="number"
+                        name="product_price"
+                        id="product_price"
+                        value={productPrice}
+                        onChange={handlePriceChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                </div>
 
-            <div>
-                <label
-                    htmlFor="product_stock"
-                    className="block mb-2 text-sm font-medium text-gray-700"
-                >
-                    Lager
-                </label>
-                <input
-                    type="number"
-                    name="product_stock"
-                    id="product_stock"
-                    value={productStock}
-                    onChange={handleStockChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
-            </div>
+                <div>
+                    <label
+                        htmlFor="product_stock"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                        Lager
+                    </label>
+                    <input
+                        type="number"
+                        name="product_stock"
+                        id="product_stock"
+                        value={productStock}
+                        onChange={handleStockChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                </div>
 
-            <div>
-                <label
-                    htmlFor="product_description"
-                    className="block mb-2 text-sm font-medium text-gray-700"
-                >
-                    Beskrivning
-                </label>
-                <textarea
-                    name="product_description"
-                    id="product_description"
-                    rows={10}
-                    value={productDescription}
-                    onChange={handleDescriptionChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                ></textarea>
-            </div>
+                <div>
+                    <label
+                        htmlFor="product_description"
+                        className="block mb-2 text-sm font-medium text-gray-700"
+                    >
+                        Beskrivning
+                    </label>
+                    <textarea
+                        name="product_description"
+                        id="product_description"
+                        rows={10}
+                        value={productDescription}
+                        onChange={handleDescriptionChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    ></textarea>
+                </div>
 
-            <button
-                type="submit"
-                onClick={handleSave}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition cursor-pointer"
-            >
-                Spara
-            </button>
-        </form>
+                <button
+                    type="submit"
+                    onClick={handleSave}
+                    className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition cursor-pointer"
+                >
+                    Spara
+                </button>
+            </form>
+            <Errors />
+        </section>
     );
 }
