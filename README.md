@@ -25,7 +25,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Add this code somewhere in your WordPress installation, either as a plugin or in your active theme's functions.php:
 
-'''
+```
 <?php
 
 add_action('rest_api_init', function () {
@@ -262,4 +262,4 @@ function product_object_to_array($product)
         'description' => $description,
     ];
 }
-'''
+```
