@@ -20,6 +20,23 @@ export default function CreateUser({ token }: { token: string }) {
             roles: 'administrator',
         };
 
+        // Basic field validation.
+        if (
+            username.length <= 1 ||
+            email.length <= 0 ||
+            password.length <= 3 ||
+            passwordConfirm.length <= 0
+        ) {
+            alert(
+                `
+                Alla fält måste fyllas i:
+                - Användarnamn måste vara minst 2 tecken långt.
+                - Lösenord måste vara minst 4 tecken långt.
+                `
+            );
+            return;
+        }
+
         const response = await fetch(api.baseUrl + '/wp/v2/users', {
             method: 'POST',
             headers: {
