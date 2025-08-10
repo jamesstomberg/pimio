@@ -5,20 +5,14 @@ export default async function User() {
     const session = await getSession();
 
     if (!session || !session.user || !session.user.token) {
-        console.error('Invalid session or missing token.');
-        return (
-            <section>
-                <h1>Användare</h1>
-                <p>Authentication failed. Please log in again.</p>
-            </section>
-        );
+        return;
     }
 
     const token = session.user.token;
 
     return (
         <section>
-            <h1>Lägg till ny användare</h1>
+            <h1 className="text-3xl text-blue-600">Lägg till ny användare</h1>
 
             <CreateUser token={token} />
         </section>
