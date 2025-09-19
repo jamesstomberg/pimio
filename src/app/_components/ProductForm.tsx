@@ -53,6 +53,11 @@ export default function ProductForm({
             description: productDescription,
         };
 
+        if (productSku.length <= 3) {
+            alert('Artikelnummer måste ha minst 3 tecken!');
+            return;
+        }
+
         if (action === 'edit') {
             const response = await editProductBySku(sku, data, token);
 
