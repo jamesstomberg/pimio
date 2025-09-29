@@ -30,13 +30,12 @@ export default function ProductTodos({ todosData, session, sku }: ProductTodosPr
     };
 
     const handleUpdateTodo = async (todo: Todo) => {
-        // ensure we have latest state version (optional)
         const current = newTodosData.find((t) => t.id === todo.id) ?? todo;
 
         const success = await updateProductTodoById(current.id, current, session?.user?.token);
         if (!success) {
             alert('Något gick fel!');
-            window.location.reload(); // <-- call it
+            window.location.reload();
             return;
         }
         alert('Noteringen uppdaterades!');
